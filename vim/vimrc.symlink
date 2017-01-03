@@ -1,0 +1,6 @@
+syntax on
+
+filetype indent plugin on
+
+" Show line numbers
+set number
