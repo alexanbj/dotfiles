@@ -1,0 +1,23 @@
+"*":
+  "atom-beautify":
+    general:
+      _analyticsUserId: "90845754-5383-483b-ad9e-25fb6d5cf6df"
+  autosave:
+    enabled: true
+  core:
+    telemetryConsent: "limited"
+    themes: [
+      "one-dark-ui"
+      "cobalt2-syntax"
+    ]
+  editor:
+    fontFamily: "Operator Mono"
+    fontSize: 12
+    showIndentGuide: true
+    showInvisibles: true
+  "exception-reporting":
+    userId: "65f23aee-b7c6-a0db-7608-0c9d1dd964f9"
+  "linter-eslint":
+    fixOnSave: true
+  welcome:
+    showOnStartup: false
