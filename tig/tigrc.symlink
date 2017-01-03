@@ -6,3 +6,6 @@ bind generic + !git commit --amend
 
 # revert change with !
 bind main ! !git revert $(commit)
+
+set main-view-date = custom
+set main-view-date-format = "%d-%m-%Y %H:%m"
