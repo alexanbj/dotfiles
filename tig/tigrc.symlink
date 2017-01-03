@@ -1,0 +1,8 @@
+# show the commit id in the main view
+set main-view-id-display = true
+
+# amend the last commit with +
+bind generic + !git commit --amend
+
+# revert change with !
+bind main ! !git revert $(commit)

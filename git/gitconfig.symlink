@@ -1,0 +1,15 @@
+# Local/private config goes in the include
+[include]
+        path = ~/.gitconfig.local
+[alias]
+	br = branch -vv
+	co = checkout
+	ff = pull --ff-only
+	rb = pull --rebase
+	p = push
+	gr = grep --break --heading --line-number
+[core]
+	editor=vim
+[push]
+	# Make 'git push' push relevant annoted tags when pushing branches
+	followTags = true
