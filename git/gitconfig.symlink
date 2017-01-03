@@ -8,6 +8,13 @@
 	rb = pull --rebase
 	p = push
 	gr = grep --break --heading --line-number
+	s = status -sb
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+
+	# Show verbose output about tags, branches or remotes
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
 [core]
 	editor=vim
 [push]
