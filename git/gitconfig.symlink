@@ -1,22 +1,41 @@
 # Local/private config goes in the include
 [include]
         path = ~/.gitconfig.local
+
 [alias]
 	br = branch -vv
 	co = checkout
 	ff = pull --ff-only
 	rb = pull --rebase
 	p = push
+
+	# Grep the git repository, with line numbers, file name above matches and empty lines between matching files
 	gr = grep --break --heading --line-number
+
+	# View the current working tree status and branch info using the short format
 	s = status -sb
+
+	# View abrreviated SHA, description, relative dates and history graph of the commits
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+
+	# Amend the currently staged files to the latest commit
+	amend = commit --amend --reuse-message=HEAD
+
+	# List contributors with number of commits
+	contributors = shortlog --summary --numbered
 
 	# Show verbose output about tags, branches or remotes
 	tags = tag -l
 	branches = branch -a
 	remotes = remote -v
+
+[apply]
+	# Detect whitespace errors when applying a patch
+	whitespace = fix
+
 [core]
 	editor=vim
+
 [push]
 	# Make 'git push' push relevant annoted tags when pushing branches
 	followTags = true
