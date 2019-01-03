@@ -1,0 +1,11 @@
+{
+  "workbench.colorTheme": "Night Owl",
+  "editor.formatOnSave": true,
+  "editor.fontFamily": "'Dank Mono', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 13,
+  "prettier.singleQuote": true,
+  "editor.renderWhitespace": "all",
+  "editor.renderControlCharacters": true,
+  "editor.minimap.enabled": false,
+  "flow.enabled": false
+}
