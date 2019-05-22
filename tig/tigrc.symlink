@@ -10,5 +10,8 @@ bind main ! !?git revert $(commit)
 # delete file with D 
 bind status D !@?rm %(file)
 
+# interactive rebase with B
+bind main B !git rebase -i %(commit)
+
 set main-view-date = custom
 set main-view-date-format = "%d-%m-%Y %H:%m"
