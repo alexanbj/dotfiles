@@ -40,3 +40,5 @@
 [push]
 	# Make 'git push' push relevant annoted tags when pushing branches
 	followTags = true
+	# When pushing untracked branches to the remote, automatically create a branch with the same name and track it
+	autoSetupRemote = true
