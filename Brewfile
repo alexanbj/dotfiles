@@ -1,7 +1,7 @@
 brew 'git'
 brew 'wget'
-brew 'fasd'
 brew 'fzf'
+brew 'zoxide'
 brew 'ripgrep'
 brew 'fd'
 brew 'node'
