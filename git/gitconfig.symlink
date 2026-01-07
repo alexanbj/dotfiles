@@ -29,6 +29,11 @@
 	branches = branch -a
 	remotes = remote -v
 
+    # delete merged git branches
+    # https://mathspp.com/blog/til/delete-merged-git-branches
+	rm-merged = !git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D
+
+
 [apply]
 	# Detect whitespace errors when applying a patch
 	whitespace = fix
