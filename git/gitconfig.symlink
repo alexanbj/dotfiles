@@ -51,3 +51,7 @@
 [fetch]
     # prune remote branches automatically on push/pull
     prune = true
+[pull]
+	rebase = true
+[init]
+	defaultBranch = main
