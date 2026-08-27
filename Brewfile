@@ -5,5 +5,6 @@ brew 'zoxide'
 brew 'ripgrep'
 brew 'fd'
 brew 'node'
+brew 'pnpm'
 brew 'git-delta'
 brew install jesseduffield/lazygit/lazygit
