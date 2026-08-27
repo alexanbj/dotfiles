@@ -1,6 +1,12 @@
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
+# keep $PATH free of duplicates no matter how many times we prepend to it.
+# NB: this only takes effect for *array* assignments (`path=(... $path)`).
+# `export PATH="x:$PATH"` writes the scalar and slips duplicates straight past
+# it, so prepend via the array below rather than by exporting PATH directly.
+typeset -U path
+
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
@@ -25,9 +31,42 @@ do
   source $file
 done
 
-# initialize autocomplete here, otherwise functions won't be loaded
-autoload -U compinit
-compinit
+# initialize autocomplete here, otherwise functions won't be loaded.
+#
+# `compinit -C` loads the cached dump and skips the security audit + staleness
+# scan of $fpath: ~10ms instead of ~230ms. That full rebuild is what made the
+# first shell after a `brew install` feel slow, since anything landing in
+# /opt/homebrew/share/zsh/site-functions invalidates the dump.
+#
+# To still pick up newly installed completions, the dump is regenerated in the
+# background once a day. The refresh lands for the *next* shell, so no startup
+# ever pays for it.
+autoload -Uz compinit
+() {
+  local dump=${ZDOTDIR:-$HOME}/.zcompdump
+  compinit -C -d $dump
+
+  # Is the dump older than a day (or missing)? Checked with zstat rather than a
+  # `(#qN.mh-24)` glob qualifier, because that syntax needs EXTENDED_GLOB, which
+  # we don't set -- without it the qualifier is just a literal string and the
+  # test silently never fires.
+  zmodload zsh/datetime          # EPOCHSECONDS
+  zmodload -F zsh/stat b:zstat
+  local -a dump_mtime
+  if ! zstat -A dump_mtime +mtime $dump 2>/dev/null || (( EPOCHSECONDS - dump_mtime[1] > 86400 ))
+  then
+    # Rebuild into a temp file and swap it in, rather than pointing compinit at
+    # $dump directly: compinit only rewrites a dump it considers out of date, so
+    # reusing the path would leave the mtime untouched and re-trigger this branch
+    # on every startup. A unique temp name keeps concurrent shells apart.
+    (
+      autoload -Uz compinit
+      local tmp=$dump.new.$$
+      compinit -d $tmp && command mv -f $tmp $dump
+      command rm -f $tmp
+    ) &>/dev/null &!
+  fi
+}
 
 # load every completion after autocomplete loads
 for file in ${(M)config_files:#*/completion.zsh}
@@ -45,3 +84,14 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
+
+# bun completions
+[ -s "/Users/alexanbj/.bun/_bun" ] && source "/Users/alexanbj/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+path=("$BUN_INSTALL/bin" $path)
+
+# OpenCode
+export OPENCODE_EXPERIMENTAL_OXFMT=true
+path=("$HOME/.local/bin" $path)
